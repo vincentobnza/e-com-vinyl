@@ -1,0 +1,3 @@
+export { default as UiButton } from './Button.vue'
+export { default as UiInput } from './Input.vue'
+export { default as UiModal } from './Modal.vue'

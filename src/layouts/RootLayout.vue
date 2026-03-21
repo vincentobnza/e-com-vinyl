@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
-
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="min-h-screen bg-neutral-950 text-white">
-    <header class="border-b border-neutral-800">
-    
-    </header>
-
+  <div class="min-h-screen bg-background">
     <RouterView v-slot="{ Component }">
       <Transition name="fade" mode="out-in">
         <component :is="Component" />

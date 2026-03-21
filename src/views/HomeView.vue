@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import HomePage from '../feature/home/pages/Home.vue'
 </script>
 
 <template>
-  <main class="max-w-3xl mx-auto px-6 py-16">
-  
+  <main>
+    <HomePage />
   </main>
 </template>
