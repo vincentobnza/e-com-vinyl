@@ -1,5 +1,22 @@
 <script setup lang="ts">
-import { RouterView } from "vue-router";
+import { onMounted, onUnmounted } from 'vue'
+import { RouterView } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+
+function handleAuthLogout() {
+  authStore.logout(true)
+}
+
+onMounted(() => {
+  authStore.hydrate()
+  window.addEventListener('auth:logout', handleAuthLogout)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('auth:logout', handleAuthLogout)
+})
 </script>
 
 <template>

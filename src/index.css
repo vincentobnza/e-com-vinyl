@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
 /* LOGO FONT */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   /* Brand colors – use as text-primary, bg-primary, border-primary, etc. */
@@ -28,10 +28,10 @@
 }
 
 * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   letter-spacing: -0.02em;
 }
 
 .logo-font {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
 }

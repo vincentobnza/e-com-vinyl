@@ -16,54 +16,54 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from "vue";
 
 const props = withDefaults(
   defineProps<{
-    label?: string
-    variant?: 'primary' | 'secondary' | 'accent' | 'neutral'
-    size?: 'small' | 'medium' | 'large'
-    disabled?: boolean
-    loading?: boolean
-    iconPosition?: 'left' | 'right'
+    label?: string;
+    variant?: "primary" | "secondary" | "accent" | "neutral";
+    size?: "small" | "medium" | "large";
+    disabled?: boolean;
+    loading?: boolean;
+    iconPosition?: "left" | "right";
   }>(),
   {
-    label: '',
-    variant: 'primary',
-    size: 'medium',
+    label: "",
+    variant: "primary",
+    size: "medium",
     disabled: false,
     loading: false,
-    iconPosition: 'left',
+    iconPosition: "left",
   },
-)
+);
 
 defineOptions({
-  name: 'UiButton',
+  name: "UiButton",
   inheritAttrs: false,
-})
+});
 
 const variantClasses: Record<string, string> = {
   primary:
-    'bg-primary text-white hover:bg-primary-hover focus:ring-primary-muted disabled:opacity-50 disabled:cursor-not-allowed',
+    "bg-primary text-white hover:bg-primary-hover focus:ring-primary-muted disabled:opacity-50 disabled:cursor-not-allowed",
   secondary:
-    'bg-secondary text-white hover:bg-secondary-hover focus:ring-secondary-muted disabled:opacity-50 disabled:cursor-not-allowed',
+    "bg-secondary text-white hover:bg-secondary-hover focus:ring-secondary-muted disabled:opacity-50 disabled:cursor-not-allowed",
   accent:
-    'bg-accent text-black hover:opacity-90 focus:ring-accent-muted disabled:opacity-50 disabled:cursor-not-allowed',
+    "bg-accent text-black hover:opacity-90 focus:ring-accent-muted disabled:opacity-50 disabled:cursor-not-allowed",
   neutral:
-    'bg-surface text-white border border-border hover:bg-surface-hover focus:ring-border-hover disabled:opacity-50 disabled:cursor-not-allowed',
-}
+    "bg-surface text-white border border-border hover:bg-surface-hover focus:ring-border-hover disabled:opacity-50 disabled:cursor-not-allowed",
+};
 
 const sizeClasses: Record<string, string> = {
-  small: 'px-3 py-1.5 text-sm gap-1.5',
-  medium: 'px-4 py-2.5 text-sm gap-1',
-  large: 'px-6 py-3 text-base gap-3',
-}
+  small: "px-3 py-1.5 text-sm gap-1.5",
+  medium: "px-4 py-2.5 text-sm gap-1",
+  large: "px-6 py-3 text-base gap-3",
+};
 
 const buttonClasses = computed(() => {
   const base =
-    'inline-flex items-center justify-center font-medium rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background'
-  return [base, variantClasses[props.variant], sizeClasses[props.size]].join(' ')
-})
+    "inline-flex items-center justify-center font-medium rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background cursor-pointer";
+  return [base, variantClasses[props.variant], sizeClasses[props.size]].join(" ");
+});
 </script>
 
 <style scoped>

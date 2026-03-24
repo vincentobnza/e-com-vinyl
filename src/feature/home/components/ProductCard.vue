@@ -46,7 +46,9 @@ defineProps<{
       <h4 class="text-sm font-medium text-neutral-500">
         {{ artist }}
       </h4>
-      <h3 class="line-clamp-2 text-sm md:text-base font-bold text-primary group-hover:underline">
+      <h3
+        class="line-clamp-2 text-sm md:text-base font-semibold text-primary group-hover:underline"
+      >
         {{ title }}
       </h3>
       <p class="mt-2 text-sm md:text-base">{{ price }} USD</p>
