@@ -1,13 +1,16 @@
 import { api } from '@/utils/axios'
 
 export interface Album {
-  id: number
+  id: string | number
   title: string
   artist: string
   price: string | number
-  stock: number
-  image: string
-  description: string
+  stock?: number
+  image?: string | null
+  image_url?: string | null
+  description?: string | null
+  slug?: string | null
+  tracks?: string[]
   created_at?: string
   updated_at?: string
 }

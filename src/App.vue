@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { ToastContainer } from '@/shared/components/ui'
 
 const authStore = useAuthStore()
 
@@ -25,6 +26,7 @@ onUnmounted(() => {
       <component :is="Component" />
     </Transition>
   </RouterView>
+  <ToastContainer />
 </template>
 
 <style scoped>

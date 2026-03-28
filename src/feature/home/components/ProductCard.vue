@@ -1,10 +1,14 @@
 <script setup lang="ts">
-defineOptions({ name: "ProductCard" });
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
 import { slugify } from "@/helpers/slug";
 
-defineProps<{
+defineOptions({ name: "ProductCard" });
+
+const props = defineProps<{
   id: string;
+  /** URL segment; falls back to slugified title when omitted */
+  slug?: string;
   title: string;
   artist: string;
   price: string;
@@ -12,10 +16,12 @@ defineProps<{
   badges?: string[];
   tracks?: number;
 }>();
+
+const hrefSlug = computed(() => props.slug ?? slugify(props.title));
 </script>
 
 <template>
-  <RouterLink :to="`/product/${slugify(title)}`" class="group flex flex-col overflow-hidden group">
+  <RouterLink :to="`/product/${hrefSlug}`" class="group flex flex-col overflow-hidden group">
     <div class="relative aspect-square bg-surface">
       <img
         :src="image ? image : 'https://placehold.co/400x400/f5f5f5/999?text=Vinyl'"

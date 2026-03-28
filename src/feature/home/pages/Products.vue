@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { HomeHeader, HomeBanner, ProductCard, ProductGrid } from "../components";
+import { HomeHeader, ProductCard, ProductGrid } from "../components";
 import { CatalogLayout } from "../layouts";
 import { getAllAlbums, type Product } from "../services/productApi";
 import { useQuery } from "@tanstack/vue-query";
 
-defineOptions({ name: "HomePage" });
+defineOptions({ name: "ProductsPage" });
 
 const {
   data: albumsData,
@@ -27,11 +27,19 @@ const albums = computed<Product[]>(() => {
 
 <template>
   <main class="min-h-screen bg-background">
-    <HomeBanner />
     <HomeHeader />
     <CatalogLayout>
       <template #content>
         <div class="space-y-6">
+          <div class="border-b border-border pb-4">
+            <h1 class="text-2xl font-semibold tracking-tight text-primary md:text-3xl">
+              All products
+            </h1>
+            <p class="mt-1 text-sm text-neutral-500">
+              Browse our vinyl and album catalog.
+            </p>
+          </div>
+
           <p v-if="isLoading" class="text-neutral-500">Loading albums...</p>
           <p v-else-if="isError" class="text-red-500">
             {{ error?.message ?? "Failed to load albums" }}

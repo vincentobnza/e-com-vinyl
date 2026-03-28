@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { getStoredToken } from '@/utils/authStorage'
 
+/** In dev, leave `VITE_API_URL` empty to use the Vite proxy (`/api` → Laravel) and avoid cross-origin issues. */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL ?? '',
   headers: {
     'Content-Type': 'application/json',
   },

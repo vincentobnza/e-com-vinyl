@@ -3,13 +3,18 @@ import { ref, watch, onUnmounted } from "vue";
 import { OhVueIcon } from "oh-vue-icons";
 import { LoginModal, SignupModal } from "@/feature/auth/components";
 import { useAuthStore } from "@/stores/auth";
+import { useCartStore } from "@/stores/cart";
+import { RouterLink } from "vue-router";
+import { storeToRefs } from "pinia";
 
 defineOptions({ name: "HomeHeader" });
 
 const authStore = useAuthStore();
+const cartStore = useCartStore();
+const { itemCount } = storeToRefs(cartStore);
+
 const NAV_ICONS = [
   { name: "io-search-outline", action: null as string | null },
-  { name: "bi-cart-dash", action: null as string | null },
   { name: "ri-user-6-line", action: "user" as string | null },
 ] as const;
 
@@ -65,16 +70,35 @@ onUnmounted(() => {
   <header class="sticky top-0 z-10 bg-surface backdrop-blur-xl w-full p-4">
     <div class="w-full max-w-screen-2xl mx-auto flex items-center justify-between">
       <div class="flex items-center">
-        <h1
+        <RouterLink
+          to="/"
           class="text-base sm:text-lg md:text-xl lg:text-2xl logo-font font-semibold tracking-wider"
         >
           CD's Hub
-        </h1>
+        </RouterLink>
       </div>
 
       <div class="flex items-center gap-3 md:gap-4 lg:gap-5 xl:gap-6">
-        <OhVueIcon :name="NAV_ICONS[0].name" class="shrink-0" scale="1.3" />
-        <OhVueIcon :name="NAV_ICONS[1].name" class="shrink-0" scale="1.3" />
+        <RouterLink
+          to="/search"
+          class="flex shrink-0 rounded-full p-1 text-primary transition-colors hover:bg-black/5"
+          aria-label="Search catalog"
+        >
+          <OhVueIcon :name="NAV_ICONS[0].name" class="shrink-0" scale="1.3" />
+        </RouterLink>
+        <RouterLink
+          to="/cart"
+          class="relative flex shrink-0 rounded-full p-1 text-primary transition-colors hover:bg-black/5"
+          aria-label="Shopping cart"
+        >
+          <OhVueIcon name="bi-cart-dash" class="shrink-0" scale="1.3" />
+          <span
+            v-if="itemCount > 0"
+            class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white"
+          >
+            {{ itemCount > 99 ? "99+" : itemCount }}
+          </span>
+        </RouterLink>
         <div ref="userMenuRef" class="relative">
           <button
             v-if="!authStore.isAuthenticated"
@@ -84,7 +108,7 @@ onUnmounted(() => {
             :aria-expanded="showSignup || showLogin"
             @click="openAuthModal"
           >
-            <OhVueIcon :name="NAV_ICONS[2].name" class="shrink-0" scale="1.3" />
+            <OhVueIcon :name="NAV_ICONS[1].name" class="shrink-0" scale="1.3" />
           </button>
           <div v-else class="relative" @click="userMenuOpen = !userMenuOpen">
             <button
@@ -94,7 +118,7 @@ onUnmounted(() => {
               :aria-expanded="userMenuOpen"
             >
               <span class="max-w-120 truncate text-sm font-medium">{{ authStore.user?.name }}</span>
-              <OhVueIcon :name="NAV_ICONS[2].name" class="shrink-0" scale="1.3" />
+              <OhVueIcon :name="NAV_ICONS[1].name" class="shrink-0" scale="1.3" />
             </button>
             <div
               v-show="userMenuOpen"

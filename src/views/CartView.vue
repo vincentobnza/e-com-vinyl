@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import HomePage from "../feature/home/pages/Home.vue";
+import CartPage from "../feature/cart/pages/Cart.vue";
 </script>
 
 <template>
   <main>
-    <HomePage />
+    <CartPage />
   </main>
 </template>
