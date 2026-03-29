@@ -3,7 +3,7 @@ import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useQuery, keepPreviousData } from "@tanstack/vue-query";
 import { OhVueIcon } from "oh-vue-icons";
-import { HomeHeader, ProductCard, ProductGrid } from "@/feature/home/components";
+import { HomeHeader, HomeFooter, ProductCard, ProductGrid } from "@/feature/home/components";
 import { CatalogLayout } from "@/feature/home/layouts";
 import { UiInput } from "@/shared/components/ui";
 import { useDebounce } from "@/shared/hooks";
@@ -90,7 +90,7 @@ function goNext() {
 </script>
 
 <template>
-  <main class="min-h-screen bg-background">
+  <main class="flex min-h-screen flex-col bg-background">
     <HomeHeader />
     <CatalogLayout>
       <template #content>
@@ -207,5 +207,6 @@ function goNext() {
         </div>
       </template>
     </CatalogLayout>
+    <HomeFooter />
   </main>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
-import { HomeHeader } from "@/feature/home/components";
+import { HomeHeader, HomeFooter } from "@/feature/home/components";
+import { UiSpinner } from "@/shared/components/ui";
 import { CatalogLayout } from "@/feature/home/layouts";
 import { useAuthStore } from "@/stores/auth";
 import { useCartStore } from "@/stores/cart";
@@ -18,7 +19,7 @@ function lineTotal(price: number, qty: number) {
 </script>
 
 <template>
-  <main class="min-h-screen bg-background">
+  <main class="flex min-h-screen flex-col bg-background">
     <HomeHeader />
     <CatalogLayout>
       <template #content>
@@ -30,9 +31,15 @@ function lineTotal(price: number, qty: number) {
             <p class="mt-1 text-sm text-neutral-500">Review items before checkout.</p>
           </div>
 
-          <p v-if="syncing && !cart.items.length" class="text-sm text-neutral-500" role="status">
-            Loading your cart…
-          </p>
+          <div
+            v-if="syncing && !cart.items.length"
+            class="flex items-center gap-2 text-sm text-neutral-500"
+            role="status"
+            aria-live="polite"
+          >
+            <UiSpinner size="sm" />
+            <span>Loading your cart…</span>
+          </div>
 
           <div v-else-if="!cart.items.length" class="px-6 py-14 text-center">
             <p class="text-base md:text-lg lg:text-2xl font-medium text-primary">
@@ -144,7 +151,7 @@ function lineTotal(price: number, qty: number) {
                 Continue shopping
               </RouterLink>
               <div class="w-full text-right sm:w-auto">
-                <template v-if="authStore.isAuthenticated && serverTotals">
+                <template v-if="serverTotals">
                   <dl class="space-y-1 text-sm text-neutral-600">
                     <div class="flex justify-between gap-8">
                       <dt>Merchandise</dt>
@@ -168,6 +175,12 @@ function lineTotal(price: number, qty: number) {
                     ${{ cart.grandTotal.toFixed(2) }}
                     <span class="text-base font-normal text-neutral-500">USD</span>
                   </p>
+                  <p v-if="authStore.isAuthenticated" class="mt-2 text-xs text-neutral-500">
+                    Cart saved to your account.
+                  </p>
+                  <p v-else class="mt-2 text-xs text-neutral-500">
+                    Cart saved on this device (guest).
+                  </p>
                 </template>
                 <template v-else>
                   <p class="text-sm text-neutral-500">Subtotal</p>
@@ -175,9 +188,10 @@ function lineTotal(price: number, qty: number) {
                     ${{ cart.subtotal.toFixed(2) }}
                     <span class="text-base font-normal text-neutral-500">USD</span>
                   </p>
-                  <p class="mt-2 text-xs text-neutral-500">
-                    Sign in for saved cart, tax, and shipping estimates.
-                  </p>
+                  <div class="mt-2 flex items-center gap-2 text-xs text-neutral-500" role="status">
+                    <UiSpinner size="sm" />
+                    <span>Loading totals…</span>
+                  </div>
                 </template>
                 <button
                   type="button"
@@ -192,5 +206,6 @@ function lineTotal(price: number, qty: number) {
         </div>
       </template>
     </CatalogLayout>
+    <HomeFooter />
   </main>
 </template>

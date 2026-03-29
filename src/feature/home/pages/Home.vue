@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { HomeHeader, HomeBanner, ProductCard, ProductGrid } from "../components";
+import { HomeHeader, HomeFooter, HomeBanner, ProductCard, ProductGrid } from "../components";
+import { UiSpinner } from "@/shared/components/ui";
 import { CatalogLayout } from "../layouts";
 import { getAllAlbums, type Product } from "../services/productApi";
 import { useQuery } from "@tanstack/vue-query";
@@ -26,13 +27,21 @@ const albums = computed<Product[]>(() => {
 </script>
 
 <template>
-  <main class="min-h-screen bg-background">
+  <main class="flex min-h-screen flex-col bg-background">
     <HomeBanner />
     <HomeHeader />
     <CatalogLayout>
       <template #content>
         <div class="space-y-6">
-          <p v-if="isLoading" class="text-neutral-500">Loading albums...</p>
+          <div
+            v-if="isLoading"
+            class="flex flex-col items-center justify-center min-h-[50vh] gap-8 text-neutral-900"
+            role="status"
+            aria-live="polite"
+          >
+            <UiSpinner class="text-primary" />
+            <span class="text-sm md:text-lg font-semibold">Loading albums...</span>
+          </div>
           <p v-else-if="isError" class="text-red-500">
             {{ error?.message ?? "Failed to load albums" }}
           </p>
@@ -61,5 +70,6 @@ const albums = computed<Product[]>(() => {
         </div>
       </template>
     </CatalogLayout>
+    <HomeFooter />
   </main>
 </template>

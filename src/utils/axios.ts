@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getStoredToken } from '@/utils/authStorage'
+import { ensureGuestCartKey } from '@/utils/guestCartKey'
 
 /** In dev, leave `VITE_API_URL` empty to use the Vite proxy (`/api` → Laravel) and avoid cross-origin issues. */
 const api = axios.create({
@@ -14,6 +15,9 @@ api.interceptors.request.use((config) => {
   const token = getStoredToken()
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
+    delete config.headers['X-Guest-Cart-Key']
+  } else {
+    config.headers['X-Guest-Cart-Key'] = ensureGuestCartKey()
   }
   return config
 })

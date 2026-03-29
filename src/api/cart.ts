@@ -42,4 +42,7 @@ export const cartApi = {
     }),
 
   clear: () => api.delete<{ cart: ServerCart }>("/api/cart"),
+
+  merge: (guestKey: string) =>
+    api.post<{ cart: ServerCart }>("/api/cart/merge", { guest_key: guestKey }),
 };

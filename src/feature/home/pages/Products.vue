@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { HomeHeader, ProductCard, ProductGrid } from "../components";
+import { HomeHeader, HomeFooter, ProductCard, ProductGrid } from "../components";
+import { UiSpinner } from "@/shared/components/ui";
 import { CatalogLayout } from "../layouts";
 import { getAllAlbums, type Product } from "../services/productApi";
 import { useQuery } from "@tanstack/vue-query";
@@ -26,7 +27,7 @@ const albums = computed<Product[]>(() => {
 </script>
 
 <template>
-  <main class="min-h-screen bg-background">
+  <main class="flex min-h-screen flex-col bg-background">
     <HomeHeader />
     <CatalogLayout>
       <template #content>
@@ -35,12 +36,18 @@ const albums = computed<Product[]>(() => {
             <h1 class="text-2xl font-semibold tracking-tight text-primary md:text-3xl">
               All products
             </h1>
-            <p class="mt-1 text-sm text-neutral-500">
-              Browse our vinyl and album catalog.
-            </p>
+            <p class="mt-1 text-sm text-neutral-500">Browse our vinyl and album catalog.</p>
           </div>
 
-          <p v-if="isLoading" class="text-neutral-500">Loading albums...</p>
+          <div
+            v-if="isLoading"
+            class="flex flex-col items-center justify-center min-h-[50vh] gap-8 text-neutral-900"
+            role="status"
+            aria-live="polite"
+          >
+            <UiSpinner class="text-primary" />
+            <span class="text-sm md:text-lg font-semibold">Loading albums...</span>
+          </div>
           <p v-else-if="isError" class="text-red-500">
             {{ error?.message ?? "Failed to load albums" }}
           </p>
@@ -69,5 +76,6 @@ const albums = computed<Product[]>(() => {
         </div>
       </template>
     </CatalogLayout>
+    <HomeFooter />
   </main>
 </template>

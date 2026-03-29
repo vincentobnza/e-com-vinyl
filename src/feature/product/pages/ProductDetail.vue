@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { RouterLink, useRoute, useRouter } from "vue-router";
-import { HomeHeader, ProductCard, ProductGrid } from "@/feature/home/components";
+import { HomeHeader, HomeFooter, ProductCard, ProductGrid } from "@/feature/home/components";
+import { UiSpinner } from "@/shared/components/ui";
 import { CatalogLayout } from "@/feature/home/layouts";
 import { getAlbumBySlug, type Product } from "@/feature/home/services/productApi";
 import { useQuery } from "@tanstack/vue-query";
@@ -115,7 +116,7 @@ function buyWithShop() {
 </script>
 
 <template>
-  <main class="min-h-screen bg-background">
+  <main class="flex min-h-screen flex-col bg-background">
     <HomeHeader />
     <CatalogLayout>
       <template #content>
@@ -128,7 +129,15 @@ function buyWithShop() {
             <span class="text-primary">{{ album?.title ?? "Album" }}</span>
           </nav>
 
-          <p v-if="isLoading" class="text-neutral-500">Loading…</p>
+          <div
+            v-if="isLoading"
+            class="flex flex-col items-center justify-center min-h-[50vh] gap-8 text-neutral-900"
+            role="status"
+            aria-live="polite"
+          >
+            <UiSpinner class="text-primary" />
+            <span class="text-sm md:text-lg font-semibold">Loading album details...</span>
+          </div>
 
           <div
             v-else-if="isError && !isNotFound"
@@ -271,5 +280,6 @@ function buyWithShop() {
         </div>
       </template>
     </CatalogLayout>
+    <HomeFooter />
   </main>
 </template>

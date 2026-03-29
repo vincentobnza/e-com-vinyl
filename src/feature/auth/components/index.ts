@@ -1,2 +1,2 @@
-export { default as LoginModal } from './LoginModal.vue'
-export { default as SignupModal } from './SignupModal.vue'
+export { default as AuthPageShell } from './AuthPageShell.vue'
+
